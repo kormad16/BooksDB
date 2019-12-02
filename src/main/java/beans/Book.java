@@ -20,7 +20,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Book {
     
+    private String isbn;
     private String title;
+    private String url;
     private List<String> authors = new LinkedList<>();
     
 }
