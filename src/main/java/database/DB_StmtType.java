@@ -11,8 +11,15 @@ package database;
  */
 public enum DB_StmtType {
     
-    
-    GET_BOOKS_FROM_AUTHOR("SELECT * FROM books b WHERE b.author LIKE ? ");
+    GET_ALL_BOOKS("SELECT * FROM books"
+            + "INNER JOIN bookauthor USING(book_id)"
+            + "INNER JOIN author a USING(author_id)"),
+    GET_BOOKS_BY_TITLE("SELECT * FROM books b"
+            + "INNER JOIN bookauthor USING(book_id)"
+            + "INNER JOIN author a USING(author_id) WHERE b.title LIKE ? "),
+    GET_BOOKS_FROM_AUTHOR("SELECT * FROM books b "
+            + "INNER JOIN bookauthor USING(book_id)"
+            + "INNER JOIN author a USING(author_id) WHERE a.author LIKE ? ");
     
     private String sqlString;
     
