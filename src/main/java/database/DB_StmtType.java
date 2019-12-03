@@ -10,25 +10,33 @@ package database;
  * @author KORNBERGERMarc
  */
 public enum DB_StmtType {
-    
-    GET_ALL_BOOKS("SELECT * FROM books"
-            + "INNER JOIN bookauthor USING(book_id)"
-            + "INNER JOIN author a USING(author_id)"),
-    GET_BOOKS_BY_TITLE("SELECT * FROM books b"
-            + "INNER JOIN bookauthor USING(book_id)"
-            + "INNER JOIN author a USING(author_id) WHERE b.title LIKE ? "),
-    GET_BOOKS_FROM_AUTHOR("SELECT * FROM books b "
-            + "INNER JOIN bookauthor USING(book_id)"
-            + "INNER JOIN author a USING(author_id) WHERE a.author LIKE ? ");
-    
+
+    GET_ALL_BOOKS("SELECT * "
+            + "FROM book b LEFT OUTER JOIN bookauthor USING(book_id) "
+            + "            LEFT OUTER JOIN author a USING(author_id) "
+            + "		   LEFT OUTER JOIN publisher p USING(publisher_id) "
+            + "ORDER BY b.book_id, rank"),
+    GET_BOOKS_BY_TITLE("SELECT * "
+            + "FROM book b LEFT OUTER JOIN bookauthor USING(book_id) "
+            + "            LEFT OUTER JOIN author a USING(author_id) "
+            + "		   LEFT OUTER JOIN publisher p USING(publisher_id) "
+            + "WHERE b.title LIKE ? "
+            + "ORDER BY b.book_id, rank"),
+    GET_BOOKS_FROM_AUTHOR("SELECT *"
+            + "FROM book b LEFT OUTER JOIN bookauthor USING(book_id) "
+            + "            LEFT OUTER JOIN author a USING(author_id) "
+            + "		   LEFT OUTER JOIN publisher p USING(publisher_id) "
+            + "WHERE a.firstname || ' ' || a.lastname LIKE ? "
+            + "ORDER BY b.book_id, rank");
+
     private String sqlString;
-    
+
     private DB_StmtType(String sqlString) {
         this.sqlString = sqlString;
     }
-    
+
     public String getSqlString() {
         return sqlString;
     }
-    
+
 }

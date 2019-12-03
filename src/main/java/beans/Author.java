@@ -5,8 +5,6 @@
  */
 package beans;
 
-import java.util.LinkedList;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,13 +16,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Book {
+public class Author {
     
     private int id;
-    private String isbn;
-    private String title;
+    private String firstname;
+    private String lastname;
     private String url;
-    private List<Author> authors;
-    private Publisher publisher;
     
 }
