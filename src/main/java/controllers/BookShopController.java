@@ -5,11 +5,12 @@
  */
 package controllers;
 
+import beans.Author;
 import database.DB_Access;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import beans.Book;
+import beans.Publisher;
+import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +40,7 @@ public class BookShopController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         try {
-            request.setAttribute("ree", access.getAllBooksFromAuthor("g"));
+            request.setAttribute("ree", new Book(12, "hi", "title", "url", new LinkedList<Author>(), new Publisher(1, "nn", "url")));
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

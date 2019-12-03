@@ -13,8 +13,6 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -25,10 +23,25 @@ public class DB_Access {
     
     DB_PStatPool pStatPool = DB_PStatPool.getInstance();
     
-    public List<Book> getAllBooksFromAuthor(String search) throws Exception {
+    public List<Book> getAllBooks() throws Exception {
+        PreparedStatement pStat = pStatPool.getPStat(DB_StmtType.GET_ALL_BOOKS);
+        ResultSet rs = pStat.executeQuery();
+        return mappedBooks(rs);
+    }
+    
+    public List<Book> getBooksFromAuthor(String search) throws Exception {
         PreparedStatement pStat = pStatPool.getPStat(DB_StmtType.GET_BOOKS_FROM_AUTHOR);
         pStat.setString(1, search);
         ResultSet rs = pStat.executeQuery();
+        pStatPool.releasePStat(pStat);
+        return mappedBooks(rs);
+    }
+    
+    public List<Book> getBooksByTitle(String search) throws Exception {
+        PreparedStatement pStat = pStatPool.getPStat(DB_StmtType.GET_BOOKS_BY_TITLE);
+        pStat.setString(1, search);
+        ResultSet rs = pStat.executeQuery();
+        pStatPool.releasePStat(pStat);
         return mappedBooks(rs);
     }
     
@@ -50,7 +63,7 @@ public class DB_Access {
             if (books.get(rs.getInt("b.book_id")) == null)
                 books.put(rs.getInt("b.book_id"), new Book(
                         rs.getInt("b.book_id"), rs.getString("b.isbn"), rs.getString("b.title"),
-                        rs.getString("b.url"), new LinkedList<Author>(), publishers.get(rs.getInt("b.publisher_id"))
+                        rs.getString("b.url"), new LinkedList<>(), publishers.get(rs.getInt("b.publisher_id"))
                 ));
             books.get(rs.getInt("b.book_id")).getAuthors().add(authors.get(rs.getInt("a.author_id")));
         }

@@ -13,6 +13,6 @@
     </head>
     <body>
         <h1>Hello World!</h1>
-        <h2>${requestScope.ree.size()}</h2>
+        <h2>${requestScope.ree.title}</h2>
     </body>
 </html>
