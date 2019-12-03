@@ -22,10 +22,16 @@ import java.util.stream.Collectors;
 public class DB_Access {
     
     DB_PStatPool pStatPool = DB_PStatPool.getInstance();
+    DB_StatPool statPool = DB_StatPool.getInstance();
     
     public List<Book> getAllBooks() throws Exception {
+//        Statement stat = statPool.getStatement();
+//        ResultSet rs = stat.executeQuery(DB_StmtType.GET_ALL_BOOKS.getSqlString());
+//        statPool.releaseStatement(stat);
+//        return mappedBooks(rs);
         PreparedStatement pStat = pStatPool.getPStat(DB_StmtType.GET_ALL_BOOKS);
         ResultSet rs = pStat.executeQuery();
+        pStatPool.releasePStat(pStat);
         return mappedBooks(rs);
     }
     
@@ -50,22 +56,22 @@ public class DB_Access {
         Map<Integer, Author> authors = new HashMap<>();
         Map<Integer, Publisher> publishers = new HashMap<>();
         while (rs.next()) {
-            if (authors.get(rs.getInt("a.author_id")) == null)
-                authors.put(rs.getInt("a.author_id"), new Author(
-                        rs.getInt("a.author_id"), rs.getString("firstname"),
-                        rs.getString("lastname"), rs.getString("a.url")
+            if (authors.get(rs.getInt("author_id")) == null)
+                authors.put(rs.getInt("author_id"), new Author(
+                        rs.getInt("author_id"), rs.getString("firstname"),
+                        rs.getString("lastname"), rs.getString("aurl")
                 ));
-            if (publishers.get(rs.getInt("b.publisher_id")) == null)
-                publishers.put(rs.getInt("b.publisher_id"), new Publisher(
-                        rs.getInt("b.publisher_id"), rs.getString("p.name"),
-                        rs.getString("p.url")
+            if (publishers.get(rs.getInt("publisher_id")) == null)
+                publishers.put(rs.getInt("publisher_id"), new Publisher(
+                        rs.getInt("publisher_id"), rs.getString("name"),
+                        rs.getString("purl")
                 ));
-            if (books.get(rs.getInt("b.book_id")) == null)
-                books.put(rs.getInt("b.book_id"), new Book(
-                        rs.getInt("b.book_id"), rs.getString("b.isbn"), rs.getString("b.title"),
-                        rs.getString("b.url"), new LinkedList<>(), publishers.get(rs.getInt("b.publisher_id"))
+            if (books.get(rs.getInt("book_id")) == null)
+                books.put(rs.getInt("book_id"), new Book(
+                        rs.getInt("book_id"), rs.getString("isbn"), rs.getString("title"),
+                        rs.getString("url"), new LinkedList<>(), publishers.get(rs.getInt("publisher_id"))
                 ));
-            books.get(rs.getInt("b.book_id")).getAuthors().add(authors.get(rs.getInt("a.author_id")));
+            books.get(rs.getInt("book_id")).getAuthors().add(authors.get(rs.getInt("author_id")));
         }
         return books.keySet().stream().map(id -> books.get(id)).collect(Collectors.toList());
     }

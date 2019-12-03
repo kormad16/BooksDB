@@ -17,7 +17,7 @@ public class DB_PStatPool {
     DB_ConnectionPool conPool = DB_ConnectionPool.getInstance();
     
     private static DB_PStatPool instance;
-    public static DB_PStatPool getInstance() {
+    public static synchronized DB_PStatPool getInstance() {
         return instance == null ? (instance = new DB_PStatPool()) : instance;
     }
     
@@ -30,7 +30,7 @@ public class DB_PStatPool {
     public PreparedStatement getPStat(DB_StmtType stmtType) throws Exception {
         Connection connection = conPool.getConnection();
         Map<DB_StmtType, PreparedStatement> pStatMap = conMap.get(connection);
-        if (pStatMap.get(stmtType) == null) {
+        if (pStatMap == null) {
             pStatMap = new HashMap<>();
             conMap.put(connection, pStatMap);
         }

@@ -11,7 +11,7 @@ package database;
  */
 public interface DB_Config {
     
-    final String DB_NAME = "BooksDB";
+    final String DB_NAME = "booksDB";
     final String DB_USER = "postgres";
     final String DB_PASSWD = "postgres";
     final String DB_URL = "jdbc:postgresql://localhost:5432/";

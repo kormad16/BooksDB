@@ -16,6 +16,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -40,7 +41,7 @@ public class BookShopController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         
         try {
-            request.setAttribute("ree", new Book(12, "hi", "title", "url", new LinkedList<Author>(), new Publisher(1, "nn", "url")));
+            request.setAttribute("ree", access.getAllBooks());
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

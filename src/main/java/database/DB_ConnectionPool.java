@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class DB_ConnectionPool implements DB_Config {
     
     private static DB_ConnectionPool instance;
-    public static DB_ConnectionPool getInstance() {
+    public static synchronized DB_ConnectionPool getInstance() {
         return instance == null ? (instance = new DB_ConnectionPool()) : instance;
     }
     
