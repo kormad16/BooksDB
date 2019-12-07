@@ -5,13 +5,18 @@
  */
 package controllers;
 
+import beans.Author;
+import database.DB_Access;
 import java.io.IOException;
-import java.io.PrintWriter;
+import beans.Book;
+import beans.Publisher;
+import java.util.LinkedList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet(name = "BookShopController", urlPatterns = {"/BookShopController"})
 public class BookShopController extends HttpServlet {
+    
+    DB_Access access = new DB_Access();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,6 +39,12 @@ public class BookShopController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        
+        try {
+            request.setAttribute("ree", access.getAllBooks());
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
         
         request.getRequestDispatcher("jsps/bookShop.jsp").forward(request, response);
     }
