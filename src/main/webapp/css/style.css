@@ -1,0 +1,54 @@
+body {
+    font-family: Arial;
+    background-color: #fffad9;
+}
+
+#title {
+    padding: 20px;
+    width: 50%;
+    text-align: center;
+    border: 5px solid #f7efbe;
+    border-radius: 20px;
+    margin-left: 23%;
+}
+
+#bookTable {
+    border: 3px solid #f7efbe;
+    width: 90%;
+    margin-left: 5%;
+    text-align: center;
+}
+
+#nightmodeButton {
+    padding: 15px;
+    background-color: #fffad9;
+    color: black;
+    border: 3px solid black;
+    border-radius: 10px;
+    position: absolute;
+}
+
+tr:nth-of-type(odd) { 
+    background: #fffad9; 
+}
+
+tr:nth-of-type(even) { 
+    background: #ebe5c3; 
+}
+
+.title {
+    text-align: left;
+}
+
+.link {
+    color: black;
+}
+
+.input {
+    background-color: #fffad9;
+    padding: 10px;
+    border-radius: 15px;
+    border: 3px solid #f7efbe;
+    color: black;
+    margin-bottom: 10px;
+}

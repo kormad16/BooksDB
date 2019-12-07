@@ -69,7 +69,7 @@ public class DB_Access {
             if (books.get(rs.getInt("book_id")) == null)
                 books.put(rs.getInt("book_id"), new Book(
                         rs.getInt("book_id"), rs.getString("isbn"), rs.getString("title"),
-                        rs.getString("url"), new LinkedList<>(), publishers.get(rs.getInt("publisher_id"))
+                        rs.getString("url"), rs.getDouble("price"), new LinkedList<>(), publishers.get(rs.getInt("publisher_id"))
                 ));
             books.get(rs.getInt("book_id")).getAuthors().add(authors.get(rs.getInt("author_id")));
         }
