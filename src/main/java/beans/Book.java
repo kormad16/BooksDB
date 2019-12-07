@@ -24,7 +24,21 @@ public class Book {
     private String isbn;
     private String title;
     private String url;
+    private double price;
     private List<Author> authors;
     private Publisher publisher;
+    
+    public boolean matchesFilter(String filter) {
+        boolean match = false;
+        if(title.toLowerCase().contains(filter.toLowerCase()))
+            match = true;
+        for(Author a : authors) {
+            if(a.getFirstname().toLowerCase().contains(filter.toLowerCase()) || a.getLastname().toLowerCase().contains(filter.toLowerCase())) {
+                match = true;
+                break;
+            }
+        }
+        return match;
+    }
     
 }
